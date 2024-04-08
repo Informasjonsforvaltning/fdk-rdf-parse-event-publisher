@@ -1,7 +1,8 @@
 # fdk-rdf-parse-event-publisher
 
 This service is responsible for publishing RDF parse events. The service consumes reasoned events (Kafka),
-parses RDF to JSON using fdk-rdf-parser-service REST API.
+parses RDF to JSON using [fdk-rdf-parser-service](https://github.com/Informasjonsforvaltning/fdk-rdf-parser-service)
+JSON API.
 
 ## Requirements
 
@@ -11,6 +12,9 @@ parses RDF to JSON using fdk-rdf-parser-service REST API.
 - docker-compose
 
 ## Generate sources
+
+Kafka messages are serialized using Avro. Avro schema's are located in the kafka/schemas directory.
+To generate sources from Avro schema, run the following command:
 
 ```
 mvn generate-sources    
