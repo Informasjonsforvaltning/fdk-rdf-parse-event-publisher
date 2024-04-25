@@ -38,6 +38,16 @@ spring:
       compression-type: snappy
     listener:
       ack-mode: manual_immediate
+resilience4j:
+  circuitbreaker:
+    instances:
+      rdf-parse:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 60000
+        automaticTransitionFromOpenToHalfOpenEnabled: true
 application:
   rdfparser:
     url: ${FDK_RDF_PARSER_SERVICE_URL}
