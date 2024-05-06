@@ -40,21 +40,17 @@ docker-compose up -d
 If you have problems starting kafka, check if all health checks are ok.
 Make sure number at the end (after 'grep') matches desired topics.
 
-```
-
 ### Start search service
 Start search service locally using maven. Use Spring profile **develop**.
+
 ```
-
 mvn spring-boot:run -Dspring-boot.run.profiles=develop
-
 ```
 
 ### Produce messages
 Check if schema id is correct in the produce-messages.sh script. This should be 1 if there
 is only one schema in your registry.
+
 ```
-
 sh ./kafka/produce-messages.sh
-
 ```
