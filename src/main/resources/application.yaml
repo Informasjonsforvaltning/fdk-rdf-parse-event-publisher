@@ -48,6 +48,8 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         waitDurationInOpenState: 60000
         automaticTransitionFromOpenToHalfOpenEnabled: true
+        ignoreExceptions:
+          - no.digdir.fdk.rdf.parse.eventpublisher.exception.RecoverableParseException
 application:
   rdfparser:
     url: ${FDK_RDF_PARSER_SERVICE_URL}
