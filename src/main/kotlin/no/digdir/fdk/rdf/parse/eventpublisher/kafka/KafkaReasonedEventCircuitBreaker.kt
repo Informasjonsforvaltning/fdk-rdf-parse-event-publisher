@@ -65,14 +65,14 @@ open class KafkaReasonedEventCircuitBreaker(
                 }
             }
         } catch (e: RecoverableParseException) {
-            LOGGER.debug("Recoverable parsing error: " + e.message)
+            LOGGER.debug("Recoverable parsing error: ", e)
             Metrics.counter(
                 "rdf_parse_error",
                 "type", resourceType.toString().lowercase()
             ).increment()
             throw e
         } catch (e: UnrecoverableParseException) {
-            LOGGER.error("Unrecoverable parsing error: " + e.message)
+            LOGGER.error("Unrecoverable parsing error: ", e)
             Metrics.counter(
                 "rdf_parse_error",
                 "type", resourceType.toString().lowercase()
