@@ -8,7 +8,6 @@ on:
 jobs:
   build-fdk-rdf-parse-event-publisher:
     name: Build when pull request is created
-    if: github.event.pull_request.draft == false
     uses: Informasjonsforvaltning/workflows/.github/workflows/build-push.yaml@main
     with:
       app_name: fdk-rdf-parse-event-publisher
@@ -17,6 +16,7 @@ jobs:
       coverage_file_path: ./target/site/jacoco/jacoco.xml
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   deploy-prod:
     name: Deploy to prod environment
