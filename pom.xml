@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
+        <version>3.4.4</version>
         <relativePath/>
     </parent>
 
@@ -33,9 +33,10 @@
         <maven.compiler.target>${java.release}</maven.compiler.target>
         <maven.exec.skip>false</maven.exec.skip>
 
-        <kotlin.version>2.1.10</kotlin.version>
-        <testcontainers.version>1.20.4</testcontainers.version>
+        <kotlin.version>2.1.20</kotlin.version>
+        <testcontainers.version>1.20.6</testcontainers.version>
         <avro.version>1.12.0</avro.version>
+        <confluent.version>7.9.0</confluent.version>
     </properties>
 
     <dependencies>
@@ -72,12 +73,12 @@
         <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-schema-registry-client</artifactId>
-            <version>7.8.0</version>
+            <version>${confluent.version}</version>
         </dependency>
         <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-avro-serializer</artifactId>
-            <version>7.8.0</version>
+            <version>${confluent.version}</version>
         </dependency>
 
         <dependency>
@@ -93,7 +94,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
-            <version>5.4.2</version>
+            <version>5.4.3</version>
             <scope>test</scope>
         </dependency>
         <!-- defines an API for working with compression and archive formats. -->
@@ -147,7 +148,7 @@
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk-jvm</artifactId>
-            <version>1.13.16</version>
+            <version>1.13.17</version>
             <scope>test</scope>
         </dependency>
         <dependency>
