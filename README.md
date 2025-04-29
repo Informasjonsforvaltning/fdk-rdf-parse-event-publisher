@@ -7,6 +7,9 @@ For a broader understanding of the system’s context, refer to
 the [architecture documentation](https://github.com/Informasjonsforvaltning/architecture-documentation) wiki. For more
 specific context on this application, see the **Harvesting** subsystem section.
 
+## Getting Started
+These instructions will give you a copy of the project up and running on your local machine for development and testing purposes.
+
 ### Prerequisites
 
 Ensure you have the following installed:
