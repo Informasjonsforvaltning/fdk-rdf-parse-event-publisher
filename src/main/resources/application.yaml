@@ -58,6 +58,9 @@ spring:
   config.activate.on-profile: develop
 application:
   scope: test.scope
+  rdfparser:
+    url: http://localhost:9000
+    api-key: test-key
 ---
 spring:
   config.activate.on-profile: test
