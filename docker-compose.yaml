@@ -1,6 +1,15 @@
 ---
 version: '3.8'
 services:
+  fdk-rdf-parser-service:
+    image: ghcr.io/informasjonsforvaltning/fdk-rdf-parser-service:staging_latest
+    build: .
+    ports:
+      - 9000:8080
+    environment:
+      - LOG_LEVEL=DEBUG
+      - API_KEY=test-key
+
   zookeeper:
     image: confluentinc/cp-zookeeper
     environment:
