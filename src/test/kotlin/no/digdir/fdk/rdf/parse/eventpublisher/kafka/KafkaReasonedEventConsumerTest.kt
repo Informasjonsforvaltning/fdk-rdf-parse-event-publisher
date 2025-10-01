@@ -8,8 +8,8 @@ import io.mockk.verify
 import no.digdir.fdk.rdf.parse.eventpublisher.exception.RecoverableParseException
 import no.digdir.fdk.rdf.parse.eventpublisher.exception.UnrecoverableParseException
 import no.digdir.fdk.rdf.parse.eventpublisher.service.RdfParserService
-import no.fdk.dataset.DatasetEvent
-import no.fdk.dataset.DatasetEventType
+import no.fdk.concept.ConceptEvent
+import no.fdk.concept.ConceptEventType
 import no.fdk.rdf.parse.RdfParseEvent
 import no.fdk.rdf.parse.RdfParseResourceType
 import org.apache.kafka.clients.consumer.ConsumerRecord
@@ -39,9 +39,9 @@ class KafkaReasonedEventConsumerTest {
         every { ack.acknowledge() } returns Unit
         every { ack.nack(Duration.ZERO) } returns Unit
 
-        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_REASONED, "my-id", "uri", System.currentTimeMillis())
+        val conceptEvent = ConceptEvent(ConceptEventType.CONCEPT_REASONED, "my-id", "uri", System.currentTimeMillis())
         kafkaReasonedEventConsumer.listen(
-            record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
+            record = ConsumerRecord("concept-events", 0, 0, "my-id", conceptEvent),
             ack = ack
         )
 
@@ -49,10 +49,10 @@ class KafkaReasonedEventConsumerTest {
             kafkaTemplate.send(withArg {
                 assertEquals("rdf-parse-events", it)
             }, withArg {
-                assertEquals(datasetEvent.fdkId, it.fdkId)
-                assertEquals(RdfParseResourceType.DATASET, it.resourceType)
+                assertEquals(conceptEvent.fdkId, it.fdkId)
+                assertEquals(RdfParseResourceType.CONCEPT, it.resourceType)
                 assertEquals(parsedJson, it.data)
-                assertEquals(datasetEvent.timestamp, it.timestamp)
+                assertEquals(conceptEvent.timestamp, it.timestamp)
             })
             ack.acknowledge()
         }
@@ -70,9 +70,9 @@ class KafkaReasonedEventConsumerTest {
         every { ack.acknowledge() } returns Unit
         every { ack.nack(Duration.ZERO) } returns Unit
 
-        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_REASONED, "my-id", "uri", System.currentTimeMillis())
+        val conceptEvent = ConceptEvent(ConceptEventType.CONCEPT_REASONED, "my-id", "uri", System.currentTimeMillis())
         kafkaReasonedEventConsumer.listen(
-            record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
+            record = ConsumerRecord("concept-events", 0, 0, "my-id", conceptEvent),
             ack = ack
         )
 
@@ -87,9 +87,9 @@ class KafkaReasonedEventConsumerTest {
         every { rdfParserService.parseRdf(any(), any()) } throws UnrecoverableParseException("Error parsing RDF")
         every { ack.nack(Duration.ZERO) } returns Unit
 
-        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_REASONED, "my-id", "uri", System.currentTimeMillis())
+        val conceptEvent = ConceptEvent(ConceptEventType.CONCEPT_REASONED, "my-id", "uri", System.currentTimeMillis())
         kafkaReasonedEventConsumer.listen(
-            record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
+            record = ConsumerRecord("concept-events", 0, 0, "my-id", conceptEvent),
             ack = ack
         )
 
