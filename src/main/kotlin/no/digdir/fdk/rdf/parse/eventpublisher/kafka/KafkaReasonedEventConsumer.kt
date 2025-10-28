@@ -16,7 +16,6 @@ class KafkaReasonedEventConsumer(
 ) {
     @KafkaListener(
         topics = [
-            "data-service-events",
             "concept-events",
             "information-model-events",
             "event-events",

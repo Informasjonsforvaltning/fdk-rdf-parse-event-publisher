@@ -7,8 +7,6 @@ import no.digdir.fdk.rdf.parse.eventpublisher.exception.UnrecoverableParseExcept
 import no.digdir.fdk.rdf.parse.eventpublisher.service.RdfParserService
 import no.fdk.concept.ConceptEvent
 import no.fdk.concept.ConceptEventType
-import no.fdk.dataservice.DataServiceEvent
-import no.fdk.dataservice.DataServiceEventType
 import no.fdk.event.EventEvent
 import no.fdk.event.EventEventType
 import no.fdk.informationmodel.InformationModelEvent
@@ -37,7 +35,6 @@ open class KafkaReasonedEventCircuitBreaker(
         val event = record.value()
 
         val resourceType = when (event) {
-            is DataServiceEvent -> RdfParseResourceType.DATA_SERVICE
             is ConceptEvent -> RdfParseResourceType.CONCEPT
             is InformationModelEvent -> RdfParseResourceType.INFORMATION_MODEL
             is ServiceEvent -> RdfParseResourceType.SERVICE
@@ -47,9 +44,7 @@ open class KafkaReasonedEventCircuitBreaker(
 
         try {
             event.let {
-                if (it is DataServiceEvent && it.type == DataServiceEventType.DATA_SERVICE_REASONED) {
-                    parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
-                } else if (it is ConceptEvent && it.type == ConceptEventType.CONCEPT_REASONED) {
+                if (it is ConceptEvent && it.type == ConceptEventType.CONCEPT_REASONED) {
                     parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
                 } else if (it is InformationModelEvent && it.type == InformationModelEventType.INFORMATION_MODEL_REASONED) {
                     parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
