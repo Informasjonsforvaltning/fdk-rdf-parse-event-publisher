@@ -9,8 +9,6 @@ import no.fdk.concept.ConceptEvent
 import no.fdk.concept.ConceptEventType
 import no.fdk.event.EventEvent
 import no.fdk.event.EventEventType
-import no.fdk.informationmodel.InformationModelEvent
-import no.fdk.informationmodel.InformationModelEventType
 import no.fdk.rdf.parse.RdfParseEvent
 import no.fdk.rdf.parse.RdfParseResourceType
 import no.fdk.service.ServiceEvent
@@ -36,7 +34,6 @@ open class KafkaReasonedEventCircuitBreaker(
 
         val resourceType = when (event) {
             is ConceptEvent -> RdfParseResourceType.CONCEPT
-            is InformationModelEvent -> RdfParseResourceType.INFORMATION_MODEL
             is ServiceEvent -> RdfParseResourceType.SERVICE
             is EventEvent -> RdfParseResourceType.EVENT
             else -> throw UnrecoverableParseException("Unknown event type")
@@ -45,8 +42,6 @@ open class KafkaReasonedEventCircuitBreaker(
         try {
             event.let {
                 if (it is ConceptEvent && it.type == ConceptEventType.CONCEPT_REASONED) {
-                    parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
-                } else if (it is InformationModelEvent && it.type == InformationModelEventType.INFORMATION_MODEL_REASONED) {
                     parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
                 } else if (it is ServiceEvent && it.type == ServiceEventType.SERVICE_REASONED) {
                     parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
