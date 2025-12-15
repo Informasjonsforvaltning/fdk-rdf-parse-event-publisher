@@ -17,8 +17,7 @@ class KafkaReasonedEventConsumer(
     @KafkaListener(
         topics = [
             "concept-events",
-            "event-events",
-            "service-events"],
+            "event-events"],
         groupId = "fdk-rdf-parse-event-publisher",
         concurrency = "4",
         containerFactory = "kafkaListenerContainerFactory",
