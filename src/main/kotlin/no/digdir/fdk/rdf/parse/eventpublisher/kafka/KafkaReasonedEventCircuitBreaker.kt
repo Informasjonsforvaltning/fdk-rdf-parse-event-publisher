@@ -11,8 +11,6 @@ import no.fdk.event.EventEvent
 import no.fdk.event.EventEventType
 import no.fdk.rdf.parse.RdfParseEvent
 import no.fdk.rdf.parse.RdfParseResourceType
-import no.fdk.service.ServiceEvent
-import no.fdk.service.ServiceEventType
 import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.Logger
@@ -34,7 +32,6 @@ open class KafkaReasonedEventCircuitBreaker(
 
         val resourceType = when (event) {
             is ConceptEvent -> RdfParseResourceType.CONCEPT
-            is ServiceEvent -> RdfParseResourceType.SERVICE
             is EventEvent -> RdfParseResourceType.EVENT
             else -> throw UnrecoverableParseException("Unknown event type")
         }
@@ -42,8 +39,6 @@ open class KafkaReasonedEventCircuitBreaker(
         try {
             event.let {
                 if (it is ConceptEvent && it.type == ConceptEventType.CONCEPT_REASONED) {
-                    parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
-                } else if (it is ServiceEvent && it.type == ServiceEventType.SERVICE_REASONED) {
                     parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
                 } else if (it is EventEvent && it.type == EventEventType.EVENT_REASONED) {
                     parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
