@@ -167,7 +167,6 @@ open class KafkaReasonedEventCircuitBreaker(
             .setAcceptHeader(null)
             .setFdkId(fdkId)
             .setResourceUri(uri)
-            .setTimestamp(timestamp)
             .setStartTime(startTimeString)
             .setEndTime(endTimeString)
             .setErrorMessage(errorMessage)
