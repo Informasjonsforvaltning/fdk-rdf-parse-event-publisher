@@ -15,9 +15,7 @@ class KafkaReasonedEventConsumer(
     private val circuitBreaker: KafkaReasonedEventCircuitBreaker
 ) {
     @KafkaListener(
-        topics = [
-            "concept-events",
-            "event-events"],
+        topics = ["concept-events"],
         groupId = "fdk-rdf-parse-event-publisher",
         concurrency = "4",
         containerFactory = "kafkaListenerContainerFactory",

@@ -7,8 +7,6 @@ import no.digdir.fdk.rdf.parse.eventpublisher.exception.UnrecoverableParseExcept
 import no.digdir.fdk.rdf.parse.eventpublisher.service.RdfParserService
 import no.fdk.concept.ConceptEvent
 import no.fdk.concept.ConceptEventType
-import no.fdk.event.EventEvent
-import no.fdk.event.EventEventType
 import no.fdk.rdf.parse.RdfParseEvent
 import no.fdk.rdf.parse.RdfParseResourceType
 import org.apache.avro.specific.SpecificRecord
@@ -32,15 +30,12 @@ open class KafkaReasonedEventCircuitBreaker(
 
         val resourceType = when (event) {
             is ConceptEvent -> RdfParseResourceType.CONCEPT
-            is EventEvent -> RdfParseResourceType.EVENT
             else -> throw UnrecoverableParseException("Unknown event type")
         }
 
         try {
             event.let {
-                if (it is ConceptEvent && it.type == ConceptEventType.CONCEPT_REASONED) {
-                    parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
-                } else if (it is EventEvent && it.type == EventEventType.EVENT_REASONED) {
+                if (it.type == ConceptEventType.CONCEPT_REASONED) {
                     parseAndProduce(it.fdkId.toString(), it.graph.toString(), it.timestamp, resourceType)
                 }
             }
