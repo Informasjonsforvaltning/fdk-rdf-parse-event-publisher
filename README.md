@@ -1,3 +1,15 @@
+
+⚠️ **Archived / Deprecated**
+
+> This repository is no longer maintained.
+> Its functionality has been replaced by:
+
+➡️ https://github.com/Informasjonsforvaltning/fdk-parser-service
+
+
+---
+
+
 # FDK RDF Parse Event Publisher
 
 This application is responsible for publishing RDF parse events. The service consumes reasoned events (Kafka), parses
